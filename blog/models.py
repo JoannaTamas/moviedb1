@@ -2,18 +2,21 @@ from django.db import models
 from django.utils import timezone
 
 
-class Post(models.Model):
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(
-            default=timezone.now)
-    published_date = models.DateTimeField(
-            blank=True, null=True)
+class Movies(models.Model):
 
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
+    GENRE_OPTIONS = (
+        ('Horror', 'Horror'),
+        ('Drama', 'Drama'),
+        ('Comedy', 'Comedy'),
+        ('SciFi', 'SciFi'),
+        ('Action', 'Action'),
+        ('Period', 'Period')
+    )
+    title = models.CharField(max_length=200)
+    language = models.CharField(max_length=20)
+    director = models.CharField(max_length=30)
+    genre = models.CharField(max_length=10,
+                             choices=GENRE_OPTIONS)
 
     def __str__(self):
         return self.title
